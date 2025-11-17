@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-	"math"
+	
 	"strings"
     // "strings" // agar kerak bo‘lsa, qoldiring; hozircha ishlatilmayapti
 )
@@ -34,6 +34,7 @@ func withdraw(){
 	 ammount-=quiz
 	 comission:=float32(quiz)*0.02
 	 total:=quiz+int(comission)
+     ammount-=int(comission)
 	 fmt.Println(strings.Repeat("=", 50))
      fmt.Println("Withdrawing:", quiz,"UZS")
      fmt.Println("Commission:", comission,"UZS")
@@ -65,51 +66,81 @@ func change(){
     fmt.Println("Password changed successfully ✅")
 	 
 }
-func check(){
-	fmt.Println("In UZS: ",ammount)
-	fmt.Println("In USD:", math.Round(float64(ammount)/11972))
-
+func check() {
+    fmt.Println("In UZS:", ammount)
+    usd := float64(ammount) / 11972
+    fmt.Printf("In USD: %.2f\n", usd) // 2 xonali kasr
 }
 
-func pay(){
-   var ammount int=5000000
-    bill:=[]string{
-		"Natural Gas---45000UZS",
-		"Drinking water---60000UZS",
-		"Garbage---78000UZS",
-		"Electrcity---55000UZS",
-	} 
-	 var location string
-	 fmt.Print("Enter the your address (Region/str/house №): ")
-	 fmt.Scanln(&location)
-	 fmt.Println(strings.Repeat("=",50))
-	 fmt.Print("choose a communal service: \n")
-	 for ser:=0; ser<len(bill);ser++{
-		fmt.Println(ser+1,"-> Paying for",bill[ser])
-	 }
-	 fmt.Println(strings.Repeat("=",50))
-     var payme int
-     fmt.Println("Mark the billing: ")
-     fmt.Scanln(&payme)
-     switch payme{
-     case 1:
-        fmt.Println("Paid for Natural Gas successfully ✅\n",location)
-        ammount-=45000
-     case 2:
-        fmt.Println("Paid for Drinking\n",location)
-        ammount-=60000
-     case 3:
-        fmt.Println("Paid for Garbage\n",location)
-        ammount-=78000
-     case 4:
-        fmt.Println("Paid for Electrcity\n",location)
-        ammount-=78000         
-     default:
-        fmt.Println("Incorrect input!!!")
+func pay() {
+    var ammount int = 5000000
+
+    cart := map[string]int{}
+    bill := []string{
+        "Natural Gas---45000UZS",
+        "Drinking water---60000UZS",
+        "Garbage---78000UZS",
+        "Electrcity---55000UZS",
     }
-    fmt.Println("Current left: ",ammount)
-	fmt.Println(strings.Repeat("=",50))
+
+    var location string
+    fmt.Print("Enter your address (Region/str/house №): ")
+    fmt.Scanln(&location)
+
+    for {
+        fmt.Print("choose a communal service: \n")
+        for ser := 0; ser < len(bill); ser++ {
+            fmt.Println(ser+1, "-> Paying for", bill[ser])
+        }
+
+        var payme int
+        fmt.Println("Mark the billing: ")
+        fmt.Scanln(&payme)
+
+        // tanlangan xizmatni cart ga qo‘shish va balansdan ayirish
+        switch payme {
+        case 1:
+            fmt.Println("Paid for Natural Gas successfully ✅\n", location)
+            cart["Natural gas"] += 45000
+            ammount -= 45000
+        case 2:
+            fmt.Println("Paid for Drinking water ✅\n", location)
+            cart["Drinking water"] += 60000
+            ammount -= 60000
+        case 3:
+            fmt.Println("Paid for Garbage ✅\n", location)
+            cart["Garbage"] += 78000
+            ammount -= 78000
+        case 4:
+            fmt.Println("Paid for Electrcity ✅\n", location)
+            cart["Electrcity"] += 55000
+            ammount -= 55000
+        default:
+            fmt.Println("Incorrect input!!!")
+        }
+
+        var loop string
+        fmt.Println("Is that all? (y/n)")
+        fmt.Scanln(&loop)
+
+				if strings.ToLower(loop) == "y" {
+				// savatchani chiqaradi va siklni to‘xtatadi
+				fmt.Println("Your cart:")
+				for key, value := range cart {
+					fmt.Printf("%s: %d UZS\n", key, value)
+				}
+				fmt.Println("Current left:", ammount, "UZS")
+				break
+			} else if strings.ToLower(loop) == "n" {
+				// sikl davom etadi
+				continue
+			} else {
+				fmt.Println("Wrong input!!!")
+			}
+
+    }
 }
+
 func main() {
     fmt.Println(strings.Repeat("=",50))
 	hp := 3 // kartani bloklash uchun urinishlar soni
