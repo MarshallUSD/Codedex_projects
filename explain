@@ -1,0 +1,9 @@
+""How encapsulation protects internal state
+
+Encapsulation means keeping sensitive attributes private or protected and exposing them only through controlled methods. This prevents external code from directly changing critical values (like verification status or phone numbers) in ways that could break business rules. By forcing all changes through validation and state‑transition logic, encapsulation ensures the internal state remains consistent, secure, and predictable.
+Why exposing lists is unsafe
+
+If you return a direct reference to an internal list, outside code can freely modify it (add, remove, reorder) without any checks. This bypasses validation rules and can corrupt the system’s state. For example, a user could inject "WITHDRAW" permission without being verified. Returning a copy of the list instead ensures that external code can read the data but cannot alter the original internal structure.
+Why composition enhances system safety
+
+Composition means building complex objects from smaller, specialized classes (e.g., SecureUser contains UserIdentity and AccountAccess). Each class enforces its own rules, and together they form a layered defense. This separation of concerns makes the system safer: identity handles verification, access enforces permission rules, and audit logs track actions. By combining them, you reduce the chance of one class being overloaded or misused, and you gain modularity for testing and maintenance.
