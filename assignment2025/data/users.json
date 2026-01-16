@@ -1,0 +1,29 @@
+{
+    "admin": {
+        "password": "admin123",
+        "role": "admin"
+    },
+    "teacher1": {
+        "password": "teacher123",
+        "role": "teacher"
+    },
+    "student1": {
+        "password": "student123",
+        "role": "student",
+        "student_id": "S001"
+    },
+    "student2": {
+        "password": "student2",
+        "role": "student",
+        "student_id": "2"
+    },
+    "teacher": {
+        "password": "1234",
+        "role": "teacher"
+    },
+    "alim": {
+        "password": "alim123",
+        "role": "student",
+        "student_id": "4"
+    }
+}

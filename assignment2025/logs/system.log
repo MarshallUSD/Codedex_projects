@@ -1,0 +1,6 @@
+System Log Initialized
+[2026-01-15 22:40:33] admin - create_user - SUCCESS
+[2026-01-15 22:42:02] teacher1 - record_attendance - SUCCESS
+[2026-01-15 22:42:18] teacher1 - mark_assignment - SUCCESS
+[2026-01-16 09:04:09] teacher1 - record_attendance - SUCCESS
+[2026-01-16 09:04:31] teacher1 - mark_assignment - SUCCESS
